@@ -44,6 +44,35 @@ class Inventory {
 
         return 0;
     }
+
+    findFabricById() {
+        this.ids.forEach( source => {
+            this.ids.forEach( target => {
+                let ham = this.hamming(source, target);
+
+                if( ham.distance === 1 ) {
+                    let id = source.substring(0, ham.index) + source.substring( ham.index + 1 );
+                    console.log( id );
+                }
+            });
+        });
+    }
+
+    hamming( source, target ) {
+        let length = source.length;
+
+        let distance = 0;
+        let index = -1;
+
+        for( let i=0; i<length; i++ ) {
+            if( source[i] !== target[i] ) {
+                distance += 1;
+                index = i;
+            }
+        }
+
+        return { distance, index };
+    }
 }
 
 module.exports = Inventory;
