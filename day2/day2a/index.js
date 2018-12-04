@@ -1,3 +1,6 @@
 const ids = require('../ids');
+const Inventory = require('../Inventory');
 
-console.log( ids );
+let inv = new Inventory( ids );
+
+console.log( inv.getChecksum(2, 3) );
