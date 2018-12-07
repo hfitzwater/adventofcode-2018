@@ -26,14 +26,38 @@ class Chronal {
             y: Math.max( ...Ys )
         };
 
-        let map = this.buildMap();
-        let swaths = this.generateSwaths( this.coords, map );
+        this.map = this.buildMap();
+        this.swaths = this.generateSwaths( this.coords, this.map );
+    }
 
-        swaths.forEach( s => {
-            let coord = this.coords.find( c => c.id === s.id );
-            if( this.isFinite(coord, this.coords, map) ) {
-                console.log( s );
+    getSafeRegionSize( maxDistance=10000 ) {
+        let size = 0;
+
+        for( let x=this.min.x; x<this.max.x; x++ ) {
+            for( let y=this.min.y; y<this.max.y; y++ ) {
+                
+                let dist = this.coords.reduce((prev, curr) => {
+                    return prev + this.distance(curr, {x,y});
+                }, 0 );
+
+                if( dist < maxDistance ) {
+                    size++;
+                }
             }
+        }
+
+        return size;
+    }
+
+    getFiniteSwaths() {
+        return this.swaths.filter( s => {
+            let coord = this.coords.find( c => c.id === s.id );
+
+            if( this.isFinite(coord, this.coords, this.map) ) {
+                return true;
+            }
+
+            return false;
         });
     }
 

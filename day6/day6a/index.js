@@ -4,3 +4,5 @@ const Chronal = require('../Chronal');
 let input = fs.readFileSync( '../input.txt' ).toString();
 
 let chron = new Chronal( input.split('\n') );
+
+console.log( chron.getFiniteSwaths()[0].count );
